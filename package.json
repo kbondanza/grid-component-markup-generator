@@ -14,8 +14,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
-    "parcel-bundler": "^1.12.4",
     "@babel/preset-env": "^7.7.7",
-    "@babel/preset-react": "^7.7.4"
+    "@babel/preset-react": "^7.7.4",
+    "@matthamlin/property-controls": "^1.0.0",
+    "parcel-bundler": "^1.12.4"
   }
 }
