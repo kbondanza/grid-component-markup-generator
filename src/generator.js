@@ -7,68 +7,58 @@ import React, { useState, useCallback, useReducer } from "react";
 import { Grid, Column } from "./components/grid";
 import Button from "./components/button";
 import Select from "./components/select";
-import Label from "./components/label";
-import TextInput from "./components/text-input";
-import { getInitialState, types, reducer } from "@matthamlin/property-controls";
+import RowsInput from "./components/rows-input";
+import ColumnsInput from "./components/columns-input";
+import GutterInput from "./components/gutter-input";
+import { getInitialState, reducer } from "@matthamlin/property-controls";
+
+const rowsInitialState = getInitialState(RowsInput.propertyControls);
+const columnsInitialState = getInitialState(ColumnsInput.propertyControls);
+const gutterInitialState = getInitialState(GutterInput.propertyControls);
 
 export default function Generator() {
-  const [rows, setRows] = useState(12);
-  const [columns, setColumns] = useState(12);
-  const [gutterSize, setGutterSize] = useState(4);
-  const [flexDirection, setFlexDirection] = useState("row");
-  const [justifyContent, setJustifyContent] = useState("center");
-  const [alignItems, setAlignItems] = useState("center");
+  const [rows, setRows] = useReducer(reducer, rowsInitialState);
+  const [columns, setColumns] = useReducer(reducer, columnsInitialState);
+  const [gutterSize, setGutterSize] = useReducer(reducer, gutterInitialState);
+  // const [flexDirection, setFlexDirection] = useState("row");
+  // const [justifyContent, setJustifyContent] = useState("center");
+  // const [alignItems, setAlignItems] = useState("center");
 
-  function handleChangeRows(event) {
-    const { value } = event.target;
-    setRows(value);
-  }
+  // function handleChangeFlexDirection(event) {
+  //   const { value } = event.target;
+  //   setFlexDirection(value);
+  // }
 
-  function handleChangeColumns(event) {
-    const { value } = event.target;
-    setColumns(value);
-  }
+  // function handleChangeJustifyContent(event) {
+  //   const { value } = event.target;
+  //   setJustifyContent(value);
+  // }
 
-  function handleChangeGutterSize(event) {
-    const { value } = event.target;
-    setGutterSize(value);
-  }
+  // function handleChangeAlignItems(event) {
+  //   const { value } = event.target;
+  //   setAlignItems(value);
+  // }
 
-  function handleChangeFlexDirection(event) {
-    const { value } = event.target;
-    setFlexDirection(value);
-  }
-
-  function handleChangeJustifyContent(event) {
-    const { value } = event.target;
-    setJustifyContent(value);
-  }
-
-  function handleChangeAlignItems(event) {
-    const { value } = event.target;
-    setAlignItems(value);
-  }
-
-  console.error(
-    alignItems,
-    "align items",
-    justifyContent,
-    "justify content",
-    flexDirection,
-    "flex dir",
-    gutterSize,
-    "gutter size",
-    rows,
-    "rows",
-    columns,
-    "columns"
-  );
-
+  // console.error(
+  //   alignItems,
+  //   "align items",
+  //   justifyContent,
+  //   "justify content",
+  //   flexDirection,
+  //   "flex dir",
+  //   gutterSize,
+  //   "gutter size",
+  //   rows,
+  //   "rows",
+  //   columns,
+  //   "columns"
+  // );
+  console.error(Array(Number(rows.value)), "rows");
   return (
     <div>
-      {[...Array(rows)].map((x, i) => (
+      {[...Array(Number(rows.value))].map((x, i) => (
         <Grid border="1px solid red" key={i}>
-          {[...Array(columns)].map((x, i) => (
+          {[...Array(Number(columns.value))].map((x, i) => (
             <Column
               border="1px solid blue"
               width="20px"
@@ -79,30 +69,22 @@ export default function Generator() {
         </Grid>
       ))}
       <form>
-        <Label htmlFor="rows-input">Rows</Label>
-        <TextInput
-          id="rows-input"
-          type="number"
-          name="rows"
-          value={rows}
-          onChange={handleChangeRows}
+        <RowsInput
+          state={rows}
+          dispatch={setRows}
+          propertyControls={RowsInput.propertyControls}
         />
-        <Label htmlFor="columns-input">Columns</Label>
-        <TextInput
-          id="columns-input"
-          type="number"
-          name="columns"
-          value={columns}
-          onChange={handleChangeColumns}
+        <ColumnsInput
+          state={columns}
+          dispatch={setColumns}
+          propertyControls={ColumnsInput.propertyControls}
         />
-        <Label htmlFor="gutter-input">Gutter size</Label>
-        <TextInput
-          id="gutter-input"
-          type="number"
-          name="gutter-size"
-          value={gutterSize}
-          onChange={handleChangeGutterSize}
+        <GutterInput
+          state={gutterSize}
+          dispatch={setGutterSize}
+          propertyControls={GutterInput.propertyControls}
         />
+        {/* 
         <Label htmlFor="flex-direction-select">Flex direction</Label>
         <Select
           id="flex-direction-select"
@@ -138,7 +120,7 @@ export default function Generator() {
           ]}
           value={alignItems}
           onChange={handleChangeAlignItems}
-        />
+        /> */}
         <Button onClick={() => {}} type="submit">
           Generate Code
         </Button>
