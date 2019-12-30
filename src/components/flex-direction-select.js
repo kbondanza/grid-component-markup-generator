@@ -2,21 +2,26 @@ import React from "react";
 import PropertyControls from "./property-controls";
 import { types } from "@matthamlin/property-controls";
 
-export default function RowsInput({ state, dispatch, propertyControls }) {
+export default function FlexDirectionSelect({
+  state,
+  dispatch,
+  propertyControls
+}) {
   return (
     <PropertyControls
       state={state}
       dispatch={dispatch}
       propertyControls={propertyControls}
-      id="rows-input"
+      id="flex-direction-select"
     />
   );
 }
 
-RowsInput.propertyControls = {
+FlexDirectionSelect.propertyControls = {
   value: {
-    type: types.number,
-    label: "Rows",
-    default: 12
+    type: types.enum,
+    label: "Flex Direction",
+    options: ["column", "row"],
+    default: "row"
   }
 };

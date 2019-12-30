@@ -1,7 +1,6 @@
 import React from "react";
 import Box from "./box";
 import Label from "./label";
-import { getInitialState, types, reducer } from "@matthamlin/property-controls";
 
 export default function Select({ label, value, dispatch, name, options, id }) {
   return (
@@ -14,18 +13,11 @@ export default function Select({ label, value, dispatch, name, options, id }) {
         onChange={({ target: { value } }) => dispatch({ name, value })}
       >
         {options.map(option => (
-          <Box as="option" key={option.value} value={option.value}>
-            {option.name}
+          <Box as="option" key={option} value={option}>
+            {option}
           </Box>
         ))}
       </Box>
     </Box>
   );
 }
-
-Select.propertyControls = {
-  value: {
-    type: types.string,
-    label: ""
-  }
-};

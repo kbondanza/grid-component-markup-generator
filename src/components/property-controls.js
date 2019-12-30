@@ -1,5 +1,6 @@
 import React from "react";
 import NumberInput from "./number-input";
+import Select from "./select";
 import { types } from "@matthamlin/property-controls";
 
 export default function PropertyControls({
@@ -112,28 +113,28 @@ export default function PropertyControls({
       //     />
       //   );
       // }
-      // case types.enum: {
-      //   if (isNested) {
-      //     return (
-      //       <EnumInput
-      //         key={propName}
-      //         {...control}
-      //         name={`${name}.${propName}`}
-      //         value={value[name]}
-      //         dispatch={dispatch}
-      //       />
-      //     );
-      //   }
-      //   return (
-      //     <EnumInput
-      //       key={propName}
-      //       {...control}
-      //       value={state[propName]}
-      //       name={propName}
-      //       dispatch={dispatch}
-      //     />
-      //   );
-      // }
+      case types.enum: {
+        if (isNested) {
+          return (
+            <Select
+              key={propName}
+              {...control}
+              name={`${name}.${propName}`}
+              value={value[name]}
+              dispatch={dispatch}
+            />
+          );
+        }
+        return (
+          <Select
+            key={propName}
+            {...control}
+            value={state[propName]}
+            name={propName}
+            dispatch={dispatch}
+          />
+        );
+      }
       case types.shape: {
         if (isNested) {
           return (

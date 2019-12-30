@@ -6,38 +6,43 @@
 import React, { useState, useCallback, useReducer } from "react";
 import { Grid, Column } from "./components/grid";
 import Button from "./components/button";
-import Select from "./components/select";
 import RowsInput from "./components/rows-input";
 import ColumnsInput from "./components/columns-input";
 import GutterInput from "./components/gutter-input";
+import FlexDirectionSelect from "./components/flex-direction-select";
+import JustifyContentSelect from "./components/justify-content-select";
+import AlignItemsSelect from "./components/align-items-select";
 import { getInitialState, reducer } from "@matthamlin/property-controls";
 
 const rowsInitialState = getInitialState(RowsInput.propertyControls);
 const columnsInitialState = getInitialState(ColumnsInput.propertyControls);
 const gutterInitialState = getInitialState(GutterInput.propertyControls);
+const flexDirectionInitialState = getInitialState(
+  FlexDirectionSelect.propertyControls
+);
+const justifyContentInitialState = getInitialState(
+  JustifyContentSelect.propertyControls
+);
+const alignItemsInitialState = getInitialState(
+  AlignItemsSelect.propertyControls
+);
 
 export default function Generator() {
   const [rows, setRows] = useReducer(reducer, rowsInitialState);
   const [columns, setColumns] = useReducer(reducer, columnsInitialState);
   const [gutterSize, setGutterSize] = useReducer(reducer, gutterInitialState);
-  // const [flexDirection, setFlexDirection] = useState("row");
-  // const [justifyContent, setJustifyContent] = useState("center");
-  // const [alignItems, setAlignItems] = useState("center");
-
-  // function handleChangeFlexDirection(event) {
-  //   const { value } = event.target;
-  //   setFlexDirection(value);
-  // }
-
-  // function handleChangeJustifyContent(event) {
-  //   const { value } = event.target;
-  //   setJustifyContent(value);
-  // }
-
-  // function handleChangeAlignItems(event) {
-  //   const { value } = event.target;
-  //   setAlignItems(value);
-  // }
+  const [flexDirection, setFlexDirection] = useReducer(
+    reducer,
+    flexDirectionInitialState
+  );
+  const [justifyContent, setJustifyContent] = useReducer(
+    reducer,
+    justifyContentInitialState
+  );
+  const [alignItems, setAlignItems] = useReducer(
+    reducer,
+    alignItemsInitialState
+  );
 
   // console.error(
   //   alignItems,
@@ -84,43 +89,21 @@ export default function Generator() {
           dispatch={setGutterSize}
           propertyControls={GutterInput.propertyControls}
         />
-        {/* 
-        <Label htmlFor="flex-direction-select">Flex direction</Label>
-        <Select
-          id="flex-direction-select"
-          options={[
-            { name: "Column", value: "column" },
-            { name: "Row", value: "row" }
-          ]}
-          value={flexDirection}
-          onChange={handleChangeFlexDirection}
+        <FlexDirectionSelect
+          state={flexDirection}
+          dispatch={setFlexDirection}
+          propertyControls={FlexDirectionSelect.propertyControls}
         />
-        <Label htmlFor="justify-content-select">Justify Content</Label>
-        <Select
-          id="justify-content-select"
-          options={[
-            { name: "flex-start", value: "flex-start" },
-            { name: "flex-end", value: "flex-end" },
-            { name: "center", value: "center" },
-            { name: "space-between", value: "space-between" },
-            { name: "space-around", value: "space-around" }
-          ]}
-          value={justifyContent}
-          onChange={handleChangeJustifyContent}
+        <JustifyContentSelect
+          state={justifyContent}
+          dispatch={setJustifyContent}
+          propertyControls={JustifyContentSelect.propertyControls}
         />
-        <Label htmlFor="align-items-select">Align Items</Label>
-        <Select
-          id="align-items-select"
-          options={[
-            { name: "flex-start", value: "flex-start" },
-            { name: "flex-end", value: "flex-end" },
-            { name: "center", value: "center" },
-            { name: "space-between", value: "space-between" },
-            { name: "space-around", value: "space-around" }
-          ]}
-          value={alignItems}
-          onChange={handleChangeAlignItems}
-        /> */}
+        <AlignItemsSelect
+          state={alignItems}
+          dispatch={setAlignItems}
+          propertyControls={AlignItemsSelect.propertyControls}
+        />
         <Button onClick={() => {}} type="submit">
           Generate Code
         </Button>
