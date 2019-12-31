@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
+import DismissIcon from "./dismiss-icon";
+import Box from "./box";
+import Button from "./button";
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -40,26 +43,27 @@ const Portal = ({ children }) => {
     document.body.appendChild(node);
   }, []);
 
-  // useEffect(() => {
-  //   return () => document.body.removeChild(node);
-  // });
+  useEffect(() => {
+    return () => document.body.removeChild(node);
+  });
 
   return createPortal(children, node);
 };
 
-export default function Modal({ children, onRequestClose, isOpen }) {
-  console.error("modal", isOpen);
+export default function Modal({ children, onRequestClose }) {
   return (
     <Portal>
-      {isOpen && (
-        <ModalWrapper>
-          <ModalCard>
-            <button onClick={onRequestClose}>Dismiss</button>
-            {children}
-          </ModalCard>
-          <Veil />
-        </ModalWrapper>
-      )}
+      <ModalWrapper>
+        <ModalCard>
+          <Box position="absolute" top="8px" right="8px">
+            <Button onClick={onRequestClose}>
+              <DismissIcon title="Dismiss" />
+            </Button>
+          </Box>
+          {children}
+        </ModalCard>
+        <Veil />
+      </ModalWrapper>
     </Portal>
   );
 }

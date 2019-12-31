@@ -5,7 +5,11 @@
 // 4. display generated grid markup in a modal
 // 5. create a copy hook to copy and paste the grid markup
 // 6. style the grid generator
-// 7. add context?
+// 7. make grid component generator more flexible to work with any grid component
+// 8. add context?
+// 9. function to download code snippit?
+// 10. click outside close for modal?
+// 11. modal focus trapping?
 import React, { useReducer, useState } from "react";
 import { Grid, Column } from "./components/grid";
 import Button from "./components/button";
@@ -50,76 +54,113 @@ export default function Generator() {
   );
   const [isOpen, setIsOpen] = useState(false);
 
-  // console.error(
-  //   alignItems,
-  //   "align items",
-  //   justifyContent,
-  //   "justify content",
-  //   flexDirection,
-  //   "flex dir",
-  //   gutterSize,
-  //   "gutter size",
-  //   rows,
-  //   "rows",
-  //   columns,
-  //   "columns"
-  // );
+  const rowsDisplayed = [...Array(Number(rows.value))];
+  const columnsDisplayed = [...Array(Number(columns.value))];
 
-  console.error(isOpen, "is open");
+  const generatedColumns = columnsDisplayed.map((x, i) => `<Column></Column>`);
+  const generatedCode = rowsDisplayed.map((x, i) => `<Grid></Grid>`);
 
-  console.error(Array(Number(rows.value)), "rows");
   return (
-    <Box position="relative">
-      {[...Array(Number(rows.value))].map((x, i) => (
-        <Grid border="1px solid red" key={i}>
-          {[...Array(Number(columns.value))].map((x, i) => (
-            <Column
-              border="1px solid blue"
-              width="20px"
-              height="20px"
+    <Box>
+      <Box as="h1" textAlign="center">
+        Grid Component Generator
+      </Box>
+      <Box as="p" textAlign="center">
+        Geared for Design Systems to Generate Grid component markup for
+        Developers to copy/paste or download to easily add to their features.
+      </Box>
+      <Box
+        position="relative"
+        display="grid"
+        gridTemplateColumns="1fr 1fr"
+        justifyItems="center"
+        alignItems="center"
+        maxWidth="fit-content"
+        margin="auto"
+      >
+        <Box width="fit-content">
+          {rowsDisplayed.map((x, i) => (
+            <Grid
+              border="1px solid red"
               key={i}
-            ></Column>
+              alignItems={alignItems}
+              justifyContent={justifyContent}
+              flexDirection={flexDirection}
+            >
+              {columnsDisplayed.map((x, i) => (
+                <Column
+                  border="1px solid blue"
+                  width="20px"
+                  height="20px"
+                  key={i}
+                  margin={gutterSize}
+                ></Column>
+              ))}
+            </Grid>
           ))}
-        </Grid>
-      ))}
-      <form>
-        <RowsInput
-          state={rows}
-          dispatch={setRows}
-          propertyControls={RowsInput.propertyControls}
-        />
-        <ColumnsInput
-          state={columns}
-          dispatch={setColumns}
-          propertyControls={ColumnsInput.propertyControls}
-        />
-        <GutterInput
-          state={gutterSize}
-          dispatch={setGutterSize}
-          propertyControls={GutterInput.propertyControls}
-        />
-        <FlexDirectionSelect
-          state={flexDirection}
-          dispatch={setFlexDirection}
-          propertyControls={FlexDirectionSelect.propertyControls}
-        />
-        <JustifyContentSelect
-          state={justifyContent}
-          dispatch={setJustifyContent}
-          propertyControls={JustifyContentSelect.propertyControls}
-        />
-        <AlignItemsSelect
-          state={alignItems}
-          dispatch={setAlignItems}
-          propertyControls={AlignItemsSelect.propertyControls}
-        />
-        <Button onClick={() => setIsOpen(true)} type="button">
-          Generate Code
-        </Button>
-      </form>
-      <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)}>
-        TEST MODAL
-      </Modal>
+        </Box>
+        <form>
+          <RowsInput
+            state={rows}
+            dispatch={setRows}
+            propertyControls={RowsInput.propertyControls}
+          />
+          <ColumnsInput
+            state={columns}
+            dispatch={setColumns}
+            propertyControls={ColumnsInput.propertyControls}
+          />
+          <GutterInput
+            state={gutterSize}
+            dispatch={setGutterSize}
+            propertyControls={GutterInput.propertyControls}
+          />
+          <p>Grid props</p>
+          <FlexDirectionSelect
+            state={flexDirection}
+            dispatch={setFlexDirection}
+            propertyControls={FlexDirectionSelect.propertyControls}
+          />
+          <JustifyContentSelect
+            state={justifyContent}
+            dispatch={setJustifyContent}
+            propertyControls={JustifyContentSelect.propertyControls}
+          />
+          <AlignItemsSelect
+            state={alignItems}
+            dispatch={setAlignItems}
+            propertyControls={AlignItemsSelect.propertyControls}
+          />
+          <p>Column props</p>
+          <FlexDirectionSelect
+            state={flexDirection}
+            dispatch={setFlexDirection}
+            propertyControls={FlexDirectionSelect.propertyControls}
+          />
+          <JustifyContentSelect
+            state={justifyContent}
+            dispatch={setJustifyContent}
+            propertyControls={JustifyContentSelect.propertyControls}
+          />
+          <AlignItemsSelect
+            state={alignItems}
+            dispatch={setAlignItems}
+            propertyControls={AlignItemsSelect.propertyControls}
+          />
+          <Button onClick={() => setIsOpen(true)} type="button">
+            Generate Code
+          </Button>
+        </form>
+        {isOpen && (
+          <Modal onRequestClose={() => setIsOpen(false)}>
+            <pre>
+              <code>{generatedCode}</code>
+            </pre>
+            <Button>Copy to Clipboard</Button>
+            <Button>Download snippet</Button>
+          </Modal>
+        )}
+      </Box>
     </Box>
   );
 }

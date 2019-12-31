@@ -17,6 +17,6 @@ GutterInput.propertyControls = {
   value: {
     type: types.number,
     label: "Gutter size",
-    default: 12
+    default: 2
   }
 };
