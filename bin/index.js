@@ -1,9 +1,14 @@
 const fs = require("fs");
 
 const path = "../src/generated/grid.js";
-function main() {
-  console.log("main?");
-  fs.writeFileSync(path, "Test");
-}
 
-main();
+module.exports = function generateCode({
+  rows,
+  columns,
+  alignItems,
+  justifyContent,
+  flexDirection
+}) {
+  console.error(rows, "rows in generate code");
+  fs.writeFileSync(path, rows);
+};

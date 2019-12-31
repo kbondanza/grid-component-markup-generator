@@ -1,9 +1,12 @@
 // 1. create components
 //   a. grid component
-//   b. checkbox
 // 2. hook up the property controls package with the following components
-// 3. create a node script that writes to a file the grid markup, can console.log it initially
-import React, { useState, useCallback, useReducer } from "react";
+// 3. create a script that writes the grid markup to display
+// 4. display generated grid markup in a modal
+// 5. create a copy hook to copy and paste the grid markup
+// 6. style the grid generator
+// 7. add context?
+import React, { useReducer, useState } from "react";
 import { Grid, Column } from "./components/grid";
 import Button from "./components/button";
 import RowsInput from "./components/rows-input";
@@ -13,6 +16,8 @@ import FlexDirectionSelect from "./components/flex-direction-select";
 import JustifyContentSelect from "./components/justify-content-select";
 import AlignItemsSelect from "./components/align-items-select";
 import { getInitialState, reducer } from "@matthamlin/property-controls";
+import Modal from "./components/modal";
+import Box from "./components/box";
 
 const rowsInitialState = getInitialState(RowsInput.propertyControls);
 const columnsInitialState = getInitialState(ColumnsInput.propertyControls);
@@ -43,6 +48,7 @@ export default function Generator() {
     reducer,
     alignItemsInitialState
   );
+  const [isOpen, setIsOpen] = useState(false);
 
   // console.error(
   //   alignItems,
@@ -58,9 +64,12 @@ export default function Generator() {
   //   columns,
   //   "columns"
   // );
+
+  console.error(isOpen, "is open");
+
   console.error(Array(Number(rows.value)), "rows");
   return (
-    <div>
+    <Box position="relative">
       {[...Array(Number(rows.value))].map((x, i) => (
         <Grid border="1px solid red" key={i}>
           {[...Array(Number(columns.value))].map((x, i) => (
@@ -104,10 +113,13 @@ export default function Generator() {
           dispatch={setAlignItems}
           propertyControls={AlignItemsSelect.propertyControls}
         />
-        <Button onClick={() => {}} type="submit">
+        <Button onClick={() => setIsOpen(true)} type="button">
           Generate Code
         </Button>
       </form>
-    </div>
+      <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)}>
+        TEST MODAL
+      </Modal>
+    </Box>
   );
 }
