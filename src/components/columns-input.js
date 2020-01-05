@@ -17,6 +17,6 @@ ColumnsInput.propertyControls = {
   value: {
     type: types.number,
     label: "Columns",
-    default: 12
+    default: 2
   }
 };

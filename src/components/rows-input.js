@@ -17,6 +17,6 @@ RowsInput.propertyControls = {
   value: {
     type: types.number,
     label: "Rows",
-    default: 12
+    default: 2
   }
 };

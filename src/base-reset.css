@@ -236,7 +236,9 @@ li > p {
   margin-bottom: calc(1.45rem / 2);
 }
 code {
-  white-space: normal;
+  /* hack to remove extra space from removed wrapping div after prettier formatted code sample */
+  margin-left: -18px;
+  display: inline-block;
 }
 @media only screen and (max-width: 480px) {
   html {

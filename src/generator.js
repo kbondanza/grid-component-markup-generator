@@ -1,8 +1,7 @@
 // Blockers
 // fix row height
-// need to fix how markup is generated
 // create copy hook
-// format markup?
+// tool tip
 import React, { useReducer, useState } from "react";
 import { Grid, Column } from "./components/grid";
 import Button from "./components/button";
@@ -18,8 +17,8 @@ import Box from "./components/box";
 import CustomElementInput from "./components/custom-element-input";
 import GithubIcon from "./components/github-icon";
 import Link from "./components/link";
-// import prettier from "prettier/standalone";
-// import babelPlugin from "prettier/parser-babylon";
+import prettier from "prettier/standalone";
+import babelPlugin from "prettier/parser-babylon";
 
 const rowsInitialState = getInitialState(RowsInput.propertyControls);
 const columnsInitialState = getInitialState(ColumnsInput.propertyControls);
@@ -81,24 +80,65 @@ export default function Generator({ theme }) {
   const columnsDisplayed = [...Array(Number(columns.value))];
 
   function generatedColumns() {
+    // show the columnAlignItems prop only if the value does not equal the default value
+    const showAlignItems =
+      columnAlignItems.value !== "flex-start"
+        ? `alignItems="${columnAlignItems.value}"`
+        : null;
+    // show the columnJustifyContent prop only if the value does not equal the default value
+    const showJustifyContent =
+      columnJustifyContent.value !== "flex-start"
+        ? `justifyContent="${columnJustifyContent.value}"`
+        : null;
+    // show the columnFlexDirection prop only if the value does not equal the default value
+    const showFlexDirection =
+      columnFlexDirection.value !== "row"
+        ? `flexDirection="${columnFlexDirection.value}"`
+        : null;
+    // show the columnCustomElement prop only if the value does not equal the default value
+    const showCustomElement =
+      columnCustomElement.value !== "div"
+        ? `as="${columnCustomElement.value}"`
+        : null;
     return columnsDisplayed.map(
-      (x, i) => `<Column alignItems="${columnAlignItems.value}"
-    justifyContent="${columnJustifyContent.value}"
-    flexDirection="${columnFlexDirection.value}"
-    as="${columnCustomElement.value}"></Column>`
+      (x, i) => `<Column ${showAlignItems}
+    ${showJustifyContent}
+    ${showFlexDirection}
+    ${showCustomElement}></Column>`
     );
   }
 
   function generatedCode() {
+    // show the alignItems prop only if the value does not equal the default value
+    const showAlignItems =
+      alignItems.value !== "flex-start"
+        ? `alignItems="${alignItems.value}"`
+        : null;
+    // show the justifyContent prop only if the value does not equal the default value
+    const showJustifyContent =
+      justifyContent.value !== "flex-start"
+        ? `justifyContent="${justifyContent.value}"`
+        : null;
+    // show the flexDirection prop only if the value does not equal the default value
+    const showFlexDirection =
+      flexDirection.value !== "row"
+        ? `flexDirection="${flexDirection.value}"`
+        : null;
+    // show the customElement prop only if the value does not equal the default value
+    const showCustomElement =
+      customElement.value !== "div" ? `as="${customElement.value}"` : null;
     const code = rowsDisplayed.map(
-      (x, i) => `<Grid
-    alignItems="${alignItems.value}"
-    justifyContent="${justifyContent.value}"
-    flexDirection="${flexDirection.value}"
-    as="${customElement.value}">${generatedColumns()}</Grid>`
+      (x, i) => `<Grid ${showAlignItems}
+      ${showJustifyContent}
+      ${showFlexDirection}
+      ${showCustomElement}>${generatedColumns()}</Grid>`
     );
-    const codeToDisplay = String(code).replace(/,/g, "");
-    return codeToDisplay;
+    const codeToDisplay = String(`<div>${code}</div>`).replace(/,|null/g, "");
+    const formattedCode = prettier.format(codeToDisplay, {
+      parser: "babel",
+      plugins: [babelPlugin]
+    });
+    return formattedCode.replace(/;|<div>|<\/div>/g, "");
   }
   console.error(generatedCode(), "generated");
   return (
@@ -123,8 +163,8 @@ export default function Generator({ theme }) {
         </Box>
         <Box as="p" textAlign="center" maxWidth="780px" m="auto">
           Geared for Design Systems who use Flexbox based Grid components to
-          generate Grid component markup for developers to copy/paste or
-          download to easily add to their features.
+          generate Grid component markup for developers to copy/paste to easily
+          add to their features.
         </Box>
       </Box>
       <Box
