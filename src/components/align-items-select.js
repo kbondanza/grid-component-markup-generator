@@ -26,8 +26,11 @@ AlignItemsSelect.propertyControls = {
       "flex-end",
       "center",
       "space-around",
-      "space-between"
+      "space-between",
+      "stretch"
     ],
-    default: "flex-start"
+    default: "stretch",
+    description:
+      "The alignment along the cross axis. `stretch` is the default value."
   }
 };

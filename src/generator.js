@@ -82,7 +82,7 @@ export default function Generator({ theme }) {
   function generatedColumns() {
     // show the columnAlignItems prop only if the value does not equal the default value
     const showAlignItems =
-      columnAlignItems.value !== "flex-start"
+      columnAlignItems.value !== "stretch"
         ? `alignItems="${columnAlignItems.value}"`
         : null;
     // show the columnJustifyContent prop only if the value does not equal the default value
@@ -111,7 +111,7 @@ export default function Generator({ theme }) {
   function generatedCode() {
     // show the alignItems prop only if the value does not equal the default value
     const showAlignItems =
-      alignItems.value !== "flex-start"
+      alignItems.value !== "stretch"
         ? `alignItems="${alignItems.value}"`
         : null;
     // show the justifyContent prop only if the value does not equal the default value
@@ -299,7 +299,7 @@ export default function Generator({ theme }) {
               alignItems="center"
               justifyContent="center"
               height="100%"
-              maxWidth="1200px"
+              maxWidth="fit-content"
               m="auto"
               p="16px 0"
             >

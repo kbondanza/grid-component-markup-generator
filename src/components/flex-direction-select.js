@@ -22,6 +22,8 @@ FlexDirectionSelect.propertyControls = {
     type: types.enum,
     label: "Flex Direction",
     options: ["column", "row"],
-    default: "row"
+    default: "row",
+    description:
+      "Defines the direction flex items are placed, establishing the main axis. `row` is the default value."
   }
 };

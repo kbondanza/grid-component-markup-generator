@@ -2,6 +2,7 @@ import React from "react";
 import Box from "./box";
 import Label from "./label";
 import styled from "styled-components";
+import Tooltip from "./tooltip";
 
 const StyledSelect = styled(Box)`
   &:hover,
@@ -12,7 +13,15 @@ const StyledSelect = styled(Box)`
     outline: 0;
   }
 `;
-export default function Select({ label, value, dispatch, name, options, id }) {
+export default function Select({
+  label,
+  value,
+  dispatch,
+  name,
+  options,
+  id,
+  description
+}) {
   return (
     <Box
       display="grid"
@@ -21,6 +30,7 @@ export default function Select({ label, value, dispatch, name, options, id }) {
       justifyItems="space-between"
     >
       <Label htmlFor={id}>{label}</Label>
+      <Tooltip>{description}</Tooltip>
       <StyledSelect
         as="select"
         id={id}

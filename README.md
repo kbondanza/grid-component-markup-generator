@@ -1,6 +1,6 @@
 # Grid Component Generator
 
-This is geared for Design Systems who use Flexbox based Grid components to generate Grid component markup for developers to copy/paste to easily add to their features or to preview in a sandbox.
+This is geared for Design Systems who use [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) based Grid components to generate Grid component markup for developers to copy/paste to easily add to their features or to preview in a sandbox.
 
 This project was insired by Sarah Drasner's [CSS Grid Generator](https://cssgrid-generator.netlify.com/).
 
@@ -19,3 +19,4 @@ Special thanks to [Matt Hamlin](https://github.com/hamlim/) for his help!
 3. Add modal focus trapping
 4. Support different sized widths for columns
 5. Support responsive props
+6. Integrate a code editor and sandbox/preview functionality

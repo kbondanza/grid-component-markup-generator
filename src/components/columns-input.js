@@ -17,6 +17,7 @@ ColumnsInput.propertyControls = {
   value: {
     type: types.number,
     label: "Columns",
-    default: 2
+    default: 2,
+    description: "The number of `<Column>` components rendered in each row."
   }
 };

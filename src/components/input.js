@@ -1,6 +1,7 @@
 import React from "react";
 import Box from "./box";
 import Label from "./label";
+import Tooltip from "./tooltip";
 import styled from "styled-components";
 
 const StyledInput = styled(Box)`
@@ -13,7 +14,15 @@ const StyledInput = styled(Box)`
   }
 `;
 
-export default function Input({ dispatch, type, label, id, value, name }) {
+export default function Input({
+  dispatch,
+  type,
+  label,
+  id,
+  value,
+  name,
+  description
+}) {
   return (
     <Box
       display="grid"
@@ -22,6 +31,7 @@ export default function Input({ dispatch, type, label, id, value, name }) {
       justifyItems="space-between"
     >
       <Label htmlFor={id}>{label}</Label>
+      <Tooltip>{description}</Tooltip>
       <StyledInput
         as="input"
         type={type}

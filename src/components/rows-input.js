@@ -17,6 +17,8 @@ RowsInput.propertyControls = {
   value: {
     type: types.number,
     label: "Rows",
-    default: 2
+    default: 2,
+    description:
+      "Each `<Grid>` component represents a row. Two rows selected will result in two `<Grid>` components rendered."
   }
 };

@@ -26,13 +26,16 @@ const ModalWrapper = styled.div`
 
 const ModalCard = styled.div`
   position: relative;
-  width: 100%;
   height: 500px;
   z-index: 10;
   background-color: #1b2a49;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-  max-width: 94vw;
+  max-width: 100%;
   border-radius: 3px;
+  padding: 1em 2em;
+  @media screen and (min-width: 52em) {
+    padding: 1em 4em;
+  }
 `;
 
 const Veil = styled.div`

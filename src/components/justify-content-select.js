@@ -28,6 +28,8 @@ JustifyContentSelect.propertyControls = {
       "space-around",
       "space-between"
     ],
-    default: "flex-start"
+    default: "flex-start",
+    description:
+      "The alignment along the main axis. `flex-start` is the default value."
   }
 };

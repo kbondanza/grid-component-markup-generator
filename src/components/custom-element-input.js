@@ -21,6 +21,8 @@ CustomElementInput.propertyControls = {
   value: {
     type: types.string,
     label: "Custom Element",
-    default: "div"
+    default: "div",
+    description:
+      "The underlying html element that the `<Grid>` or `<Column>` component is rendered as."
   }
 };

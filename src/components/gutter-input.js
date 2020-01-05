@@ -17,6 +17,8 @@ GutterInput.propertyControls = {
   value: {
     type: types.number,
     label: "Gutter size",
-    default: 2
+    default: 2,
+    description:
+      "The amount of margin between each column component. Each value is based on 4px increments."
   }
 };
