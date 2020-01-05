@@ -1,15 +1,8 @@
-// 1. create components
-//   a. grid component
-// 2. hook up the property controls package with the following components
-// 3. create a script that writes the grid markup to display
-// 4. display generated grid markup in a modal
-// 5. create a copy hook to copy and paste the grid markup
-// 6. style the grid generator
-// 7. make grid component generator more flexible to work with any grid component
-// 8. add context?
-// 9. function to download code snippit?
-// 10. click outside close for modal?
-// 11. modal focus trapping?
+// Blockers
+// fix row height
+// need to fix how markup is generated
+// create copy hook
+// format markup?
 import React, { useReducer, useState } from "react";
 import { Grid, Column } from "./components/grid";
 import Button from "./components/button";
@@ -22,6 +15,11 @@ import AlignItemsSelect from "./components/align-items-select";
 import { getInitialState, reducer } from "@matthamlin/property-controls";
 import Modal from "./components/modal";
 import Box from "./components/box";
+import CustomElementInput from "./components/custom-element-input";
+import GithubIcon from "./components/github-icon";
+import Link from "./components/link";
+// import prettier from "prettier/standalone";
+// import babelPlugin from "prettier/parser-babylon";
 
 const rowsInitialState = getInitialState(RowsInput.propertyControls);
 const columnsInitialState = getInitialState(ColumnsInput.propertyControls);
@@ -35,8 +33,12 @@ const justifyContentInitialState = getInitialState(
 const alignItemsInitialState = getInitialState(
   AlignItemsSelect.propertyControls
 );
+const customElementInitialState = getInitialState(
+  CustomElementInput.propertyControls
+);
 
-export default function Generator() {
+export default function Generator({ theme }) {
+  // Grid State
   const [rows, setRows] = useReducer(reducer, rowsInitialState);
   const [columns, setColumns] = useReducer(reducer, columnsInitialState);
   const [gutterSize, setGutterSize] = useReducer(reducer, gutterInitialState);
@@ -52,114 +54,242 @@ export default function Generator() {
     reducer,
     alignItemsInitialState
   );
+  const [customElement, setCustomElement] = useReducer(
+    reducer,
+    customElementInitialState
+  );
+  // Column State
+  const [columnFlexDirection, setColumnFlexDirection] = useReducer(
+    reducer,
+    flexDirectionInitialState
+  );
+  const [columnJustifyContent, setColumnJustifyContent] = useReducer(
+    reducer,
+    justifyContentInitialState
+  );
+  const [columnAlignItems, setColumnAlignItems] = useReducer(
+    reducer,
+    alignItemsInitialState
+  );
+  const [columnCustomElement, setColumnCustomElement] = useReducer(
+    reducer,
+    customElementInitialState
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   const rowsDisplayed = [...Array(Number(rows.value))];
   const columnsDisplayed = [...Array(Number(columns.value))];
 
-  const generatedColumns = columnsDisplayed.map((x, i) => `<Column></Column>`);
-  const generatedCode = rowsDisplayed.map((x, i) => `<Grid></Grid>`);
+  function generatedColumns() {
+    return columnsDisplayed.map(
+      (x, i) => `<Column alignItems="${columnAlignItems.value}"
+    justifyContent="${columnJustifyContent.value}"
+    flexDirection="${columnFlexDirection.value}"
+    as="${columnCustomElement.value}"></Column>`
+    );
+  }
 
+  function generatedCode() {
+    const code = rowsDisplayed.map(
+      (x, i) => `<Grid
+    alignItems="${alignItems.value}"
+    justifyContent="${justifyContent.value}"
+    flexDirection="${flexDirection.value}"
+    as="${customElement.value}">${generatedColumns()}</Grid>`
+    );
+    const codeToDisplay = String(code).replace(/,/g, "");
+    return codeToDisplay;
+  }
+  console.error(generatedCode(), "generated");
   return (
-    <Box>
-      <Box as="h1" textAlign="center">
-        Grid Component Generator
-      </Box>
-      <Box as="p" textAlign="center">
-        Geared for Design Systems to Generate Grid component markup for
-        Developers to copy/paste or download to easily add to their features.
+    <Box
+      bg={theme.colors.primary}
+      height="100%"
+      color={theme.colors.white}
+      position="relative"
+      overflowY="auto"
+      padding="16px"
+    >
+      <Box mb="10" pb="10" borderBottom={`1px solid ${theme.colors.secondary}`}>
+        <Box
+          as="h1"
+          textAlign="center"
+          pt="10"
+          pb="7"
+          m="0"
+          letterSpacing={theme.letterSpacing.large}
+        >
+          Grid Component Markup Generator
+        </Box>
+        <Box as="p" textAlign="center" maxWidth="780px" m="auto">
+          Geared for Design Systems who use Flexbox based Grid components to
+          generate Grid component markup for developers to copy/paste or
+          download to easily add to their features.
+        </Box>
       </Box>
       <Box
         position="relative"
         display="grid"
-        gridTemplateColumns="1fr 1fr"
+        gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
+        gridGap="48px"
         justifyItems="center"
         alignItems="center"
         maxWidth="fit-content"
         margin="auto"
       >
-        <Box width="fit-content">
+        <Box
+          width="100%"
+          height="100%"
+          boxShadow="2px 2px 10px rgba(0, 0, 0, 0.3)"
+          border={`1px solid ${theme.colors.secondary}`}
+        >
           {rowsDisplayed.map((x, i) => (
             <Grid
-              border="1px solid red"
               key={i}
-              alignItems={alignItems}
-              justifyContent={justifyContent}
-              flexDirection={flexDirection}
+              alignItems={alignItems.value}
+              justifyContent={justifyContent.value}
+              flexDirection={flexDirection.value}
+              as={customElement.value}
             >
               {columnsDisplayed.map((x, i) => (
                 <Column
-                  border="1px solid blue"
-                  width="20px"
-                  height="20px"
+                  bg={theme.colors.tertiary}
                   key={i}
-                  margin={gutterSize}
-                ></Column>
+                  margin={gutterSize.value}
+                  alignItems={columnAlignItems.value}
+                  justifyContent={columnJustifyContent.value}
+                  flexDirection={columnFlexDirection.value}
+                  as={columnCustomElement.value}
+                >
+                  <Box height="50px" />
+                </Column>
               ))}
             </Grid>
           ))}
         </Box>
-        <form>
-          <RowsInput
-            state={rows}
-            dispatch={setRows}
-            propertyControls={RowsInput.propertyControls}
+        <Box display="grid" gridTemplateColumns="1fr" gridGap="16px">
+          <Box
+            as="p"
+            fontWeight="bold"
+            fontSize="24px"
+            letterSpacing={theme.letterSpacing.large}
+          >
+            Grid props
+          </Box>
+          <Box display="grid" gridTemplateColumns="1fr 1fr" gridGap="16px">
+            <RowsInput
+              state={rows}
+              dispatch={setRows}
+              propertyControls={RowsInput.propertyControls}
+            />
+            <ColumnsInput
+              state={columns}
+              dispatch={setColumns}
+              propertyControls={ColumnsInput.propertyControls}
+            />
+            <GutterInput
+              state={gutterSize}
+              dispatch={setGutterSize}
+              propertyControls={GutterInput.propertyControls}
+            />
+            <CustomElementInput
+              state={customElement}
+              dispatch={setCustomElement}
+              propertyControls={CustomElementInput.propertyControls}
+            />
+            <FlexDirectionSelect
+              state={flexDirection}
+              dispatch={setFlexDirection}
+              propertyControls={FlexDirectionSelect.propertyControls}
+            />
+            <JustifyContentSelect
+              state={justifyContent}
+              dispatch={setJustifyContent}
+              propertyControls={JustifyContentSelect.propertyControls}
+            />
+            <AlignItemsSelect
+              state={alignItems}
+              dispatch={setAlignItems}
+              propertyControls={AlignItemsSelect.propertyControls}
+            />
+          </Box>
+          <Box
+            as="p"
+            fontWeight="bold"
+            fontSize="24px"
+            letterSpacing={theme.letterSpacing.large}
+            mt="5"
+          >
+            Column props
+          </Box>
+          <CustomElementInput
+            state={columnCustomElement}
+            dispatch={setColumnCustomElement}
+            propertyControls={CustomElementInput.propertyControls}
           />
-          <ColumnsInput
-            state={columns}
-            dispatch={setColumns}
-            propertyControls={ColumnsInput.propertyControls}
-          />
-          <GutterInput
-            state={gutterSize}
-            dispatch={setGutterSize}
-            propertyControls={GutterInput.propertyControls}
-          />
-          <p>Grid props</p>
           <FlexDirectionSelect
-            state={flexDirection}
-            dispatch={setFlexDirection}
+            state={columnFlexDirection}
+            dispatch={setColumnFlexDirection}
             propertyControls={FlexDirectionSelect.propertyControls}
           />
           <JustifyContentSelect
-            state={justifyContent}
-            dispatch={setJustifyContent}
+            state={columnJustifyContent}
+            dispatch={setColumnJustifyContent}
             propertyControls={JustifyContentSelect.propertyControls}
           />
           <AlignItemsSelect
-            state={alignItems}
-            dispatch={setAlignItems}
+            state={columnAlignItems}
+            dispatch={setColumnAlignItems}
             propertyControls={AlignItemsSelect.propertyControls}
           />
-          <p>Column props</p>
-          <FlexDirectionSelect
-            state={flexDirection}
-            dispatch={setFlexDirection}
-            propertyControls={FlexDirectionSelect.propertyControls}
-          />
-          <JustifyContentSelect
-            state={justifyContent}
-            dispatch={setJustifyContent}
-            propertyControls={JustifyContentSelect.propertyControls}
-          />
-          <AlignItemsSelect
-            state={alignItems}
-            dispatch={setAlignItems}
-            propertyControls={AlignItemsSelect.propertyControls}
-          />
-          <Button onClick={() => setIsOpen(true)} type="button">
+          <Button
+            onClick={() => setIsOpen(true)}
+            type="button"
+            m="24px auto 0"
+            maxWidth="300px"
+          >
             Generate Code
           </Button>
-        </form>
+        </Box>
         {isOpen && (
           <Modal onRequestClose={() => setIsOpen(false)}>
-            <pre>
-              <code>{generatedCode}</code>
-            </pre>
-            <Button>Copy to Clipboard</Button>
-            <Button>Download snippet</Button>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              height="100%"
+              maxWidth="1200px"
+              m="auto"
+              p="16px 0"
+            >
+              <Box
+                bg={theme.colors.tertiary}
+                p="16px"
+                boxShadow={`0 0 0 2px ${theme.colors.secondary}`}
+                color={theme.colors.tertiaryLight}
+                borderRadius="5px"
+                mb="32px"
+                overflowY="auto"
+              >
+                <pre>
+                  <code>{generatedCode()}</code>
+                </pre>
+              </Box>
+              <Button>Copy to Clipboard</Button>
+            </Box>
           </Modal>
         )}
+      </Box>
+      <Box
+        position="fixed"
+        bottom="6"
+        right="6"
+        color={theme.colors.secondaryBright}
+      >
+        <Link>
+          <GithubIcon title="Github" />
+        </Link>
       </Box>
     </Box>
   );

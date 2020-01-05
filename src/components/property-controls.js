@@ -1,5 +1,5 @@
 import React from "react";
-import NumberInput from "./number-input";
+import Input from "./input";
 import Select from "./select";
 import { types } from "@matthamlin/property-controls";
 
@@ -15,32 +15,10 @@ export default function PropertyControls({
   let propertyControlEntries = Object.entries(propertyControls);
   return propertyControlEntries.map(([propName, control]) => {
     switch (control.type) {
-      // case types.string: {
-      //   if (isNested) {
-      //     return (
-      //       <StringInput
-      //         key={propName}
-      //         {...control}
-      //         name={`${name}.${propName}`}
-      //         value={value[propName]}
-      //         dispatch={dispatch}
-      //       />
-      //     );
-      //   }
-      //   return (
-      //     <StringInput
-      //       key={propName}
-      //       {...control}
-      //       name={propName}
-      //       value={state[name]}
-      //       dispatch={dispatch}
-      //     />
-      //   );
-      // }
-      case types.number: {
+      case types.string: {
         if (isNested) {
           return (
-            <NumberInput
+            <Input
               key={propName}
               {...control}
               name={`${name}.${propName}`}
@@ -50,22 +28,40 @@ export default function PropertyControls({
             />
           );
         }
-        console.error(
-          propName,
-          "prop name",
-          state,
-          "state",
-          state[name],
-          "state name"
-        );
         return (
-          <NumberInput
+          <Input
             key={propName}
             {...control}
             name={propName}
             value={state[propName]}
             dispatch={dispatch}
             id={id}
+          />
+        );
+      }
+      case types.number: {
+        if (isNested) {
+          return (
+            <Input
+              key={propName}
+              {...control}
+              name={`${name}.${propName}`}
+              value={value[name]}
+              dispatch={dispatch}
+              id={id}
+              type="number"
+            />
+          );
+        }
+        return (
+          <Input
+            key={propName}
+            {...control}
+            name={propName}
+            value={state[propName]}
+            dispatch={dispatch}
+            id={id}
+            type="number"
           />
         );
       }

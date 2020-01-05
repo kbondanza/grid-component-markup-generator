@@ -1,13 +1,13 @@
 export const theme = {
   colors: {
-    primary: "2160ad",
+    primary: "#1b2a49",
     primaryDark: "#012e6f",
-    primaryLight: "#caefff",
-    secondary: "#f15959",
-    secondaryDark: "#d63333",
-    black: "#03050d",
-    grey: "#f7f7f7",
-    mediumGrey: "#6f6f6f",
+    secondary: "#00909e",
+    secondaryBright: "#00b8c9",
+    tertiaryLight: "#d1e2ff",
+    tertiary: "#465881",
+    black: "#000",
+    grey: "#c9d1d3",
     white: "#fff"
   },
   fontSizes: [16, 18, 20, 24, 28, 32, 36, 40, 44, 48],
@@ -16,5 +16,8 @@ export const theme = {
   },
   // margin and padding
   space: [0, 2, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 64, 72],
-  breakpoints: [40, 52, 72].map(n => n + "rem")
+  breakpoints: [40, 52, 72].map(n => n + "rem"),
+  letterSpacing: {
+    large: "1.2px"
+  }
 };

@@ -3,7 +3,15 @@ import { createPortal } from "react-dom";
 import styled from "styled-components";
 import DismissIcon from "./dismiss-icon";
 import Box from "./box";
-import Button from "./button";
+
+const StyledButton = styled(Box)`
+  cursor: pointer;
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    outline: 2px dotted #00909e;
+  }
+`;
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -21,9 +29,10 @@ const ModalCard = styled.div`
   width: 100%;
   height: 500px;
   z-index: 10;
-  background-color: white;
-  box-shadow: 2px 2px 10px rbga(0, 0, 0, 0.3);
+  background-color: #1b2a49;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
   max-width: 94vw;
+  border-radius: 3px;
 `;
 
 const Veil = styled.div`
@@ -56,9 +65,14 @@ export default function Modal({ children, onRequestClose }) {
       <ModalWrapper>
         <ModalCard>
           <Box position="absolute" top="8px" right="8px">
-            <Button onClick={onRequestClose}>
-              <DismissIcon title="Dismiss" />
-            </Button>
+            <StyledButton
+              as="button"
+              border="0"
+              bg="#1b2a49"
+              onClick={onRequestClose}
+            >
+              <DismissIcon title="Dismiss" fill="#00b8c9" />
+            </StyledButton>
           </Box>
           {children}
         </ModalCard>

@@ -3,7 +3,7 @@ import Box from "./box";
 import Label from "./label";
 import styled from "styled-components";
 
-const StyledSelect = styled(Box)`
+const StyledInput = styled(Box)`
   &:hover,
   &:focus {
     box-shadow: 0 0 0 2px #00909e;
@@ -12,7 +12,8 @@ const StyledSelect = styled(Box)`
     outline: 0;
   }
 `;
-export default function Select({ label, value, dispatch, name, options, id }) {
+
+export default function Input({ dispatch, type, label, id, value, name }) {
   return (
     <Box
       display="grid"
@@ -21,18 +22,15 @@ export default function Select({ label, value, dispatch, name, options, id }) {
       justifyItems="space-between"
     >
       <Label htmlFor={id}>{label}</Label>
-      <StyledSelect
-        as="select"
-        id={id}
+      <StyledInput
+        as="input"
+        type={type}
         value={value}
         onChange={({ target: { value } }) => dispatch({ name, value })}
-      >
-        {options.map(option => (
-          <Box as="option" key={option} value={option}>
-            {option}
-          </Box>
-        ))}
-      </StyledSelect>
+        id={id}
+        name={name}
+        width="50px"
+      />
     </Box>
   );
 }
