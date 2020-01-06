@@ -150,4 +150,4 @@ var t;function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.
 },{"react":"HdMw","styled-components":"OuUI","./theme":"m3VC","./src/generator":"MVUK","./src/base-reset.css":"E20v"}],"Focm":[function(require,module,exports) {
 "use strict";var e=u(require("react")),r=u(require("react-dom")),t=u(require("./app"));function u(e){return e&&e.__esModule?e:{default:e}}var a=document.getElementById("app");r.default.render(e.default.createElement(t.default,null),a);
 },{"react":"HdMw","react-dom":"X9zx","./app":"A2T1"}]},{},["Focm"], null)
-//# sourceMappingURL=/grid-generator.6b538972.js.map
+//# sourceMappingURL=/grid-component-markup-generator.6b538972.js.map
