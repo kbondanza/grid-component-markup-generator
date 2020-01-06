@@ -8,6 +8,8 @@ The color palette used is from [Color Hunt](https://colorhunt.co/palette/162867)
 
 Font is Lato from [Google fonts](https://fonts.google.com/specimen/Lato?selection.family=Lato).
 
+Question mark icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/).
+
 The input and select components are using [`@matthamlin/property-controls` package](https://github.com/hamlim/projects/tree/master/packages/property-controls), which implements FramerX like Property Controls for any React component.
 
 Special thanks to [Matt Hamlin](https://github.com/hamlim/) for his help!

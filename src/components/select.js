@@ -29,8 +29,12 @@ export default function Select({
       gridGap="8px"
       justifyItems="space-between"
     >
-      <Label htmlFor={id}>{label}</Label>
-      <Tooltip>{description}</Tooltip>
+      <Box display="flex" alignItems="center">
+        <Label htmlFor={id}>{label}</Label>
+        <Box ml="4">
+          <Tooltip>{description}</Tooltip>
+        </Box>
+      </Box>
       <StyledSelect
         as="select"
         id={id}

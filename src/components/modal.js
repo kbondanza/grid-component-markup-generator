@@ -53,9 +53,6 @@ const Portal = ({ children }) => {
 
   useEffect(() => {
     document.body.appendChild(node);
-  }, []);
-
-  useEffect(() => {
     return () => document.body.removeChild(node);
   });
 

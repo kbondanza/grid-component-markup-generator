@@ -19,6 +19,7 @@ import GithubIcon from "./components/github-icon";
 import Link from "./components/link";
 import prettier from "prettier/standalone";
 import babelPlugin from "prettier/parser-babylon";
+import useClipboard from "./components/useClipboard";
 
 const rowsInitialState = getInitialState(RowsInput.propertyControls);
 const columnsInitialState = getInitialState(ColumnsInput.propertyControls);
@@ -78,6 +79,8 @@ export default function Generator({ theme }) {
 
   const rowsDisplayed = [...Array(Number(rows.value))];
   const columnsDisplayed = [...Array(Number(columns.value))];
+
+  const [copy, isCopied] = useClipboard();
 
   function generatedColumns() {
     // show the columnAlignItems prop only if the value does not equal the default value
@@ -140,7 +143,7 @@ export default function Generator({ theme }) {
     });
     return formattedCode.replace(/;|<div>|<\/div>/g, "");
   }
-  console.error(generatedCode(), "generated");
+
   return (
     <Box
       bg={theme.colors.primary}
@@ -173,13 +176,13 @@ export default function Generator({ theme }) {
         gridTemplateColumns={["1fr", "1fr", "1fr 1fr"]}
         gridGap="48px"
         justifyItems="center"
-        alignItems="center"
+        alignItems="flex-start"
         maxWidth="fit-content"
         margin="auto"
       >
         <Box
           width="100%"
-          height="100%"
+          height="fit-content"
           boxShadow="2px 2px 10px rgba(0, 0, 0, 0.3)"
           border={`1px solid ${theme.colors.secondary}`}
         >
@@ -195,13 +198,13 @@ export default function Generator({ theme }) {
                 <Column
                   bg={theme.colors.tertiary}
                   key={i}
-                  margin={gutterSize.value}
+                  m={gutterSize.value}
                   alignItems={columnAlignItems.value}
                   justifyContent={columnJustifyContent.value}
                   flexDirection={columnFlexDirection.value}
                   as={columnCustomElement.value}
                 >
-                  <Box height="50px" />
+                  <Box flex="1 1 100%" height="50px" />
                 </Column>
               ))}
             </Grid>
@@ -316,7 +319,9 @@ export default function Generator({ theme }) {
                   <code>{generatedCode()}</code>
                 </pre>
               </Box>
-              <Button>Copy to Clipboard</Button>
+              <Button onClick={() => copy(generatedCode())}>
+                {isCopied ? "Copied!" : "Copy to Clipboard"}
+              </Button>
             </Box>
           </Modal>
         )}

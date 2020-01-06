@@ -24,14 +24,13 @@ export default function Input({
   description
 }) {
   return (
-    <Box
-      display="grid"
-      gridTemplateColumns="1fr 1fr"
-      gridGap="8px"
-      justifyItems="space-between"
-    >
-      <Label htmlFor={id}>{label}</Label>
-      <Tooltip>{description}</Tooltip>
+    <Box display="grid" gridTemplateColumns="1fr 1fr" gridGap="8px">
+      <Box display="flex" alignItems="center">
+        <Label htmlFor={id}>{label}</Label>
+        <Box ml="4">
+          <Tooltip>{description}</Tooltip>
+        </Box>
+      </Box>
       <StyledInput
         as="input"
         type={type}
