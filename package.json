@@ -8,7 +8,7 @@
     "clean": "rm dist/bundle.js",
     "start": "parcel index.html",
     "build-prod": "parcel build index.html",
-    "predeploy": "rm -rf dist && parcel build index.html --public-url grid-component-markup-generator",
+    "predeploy": "rm -rf dist && parcel build index.html",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
@@ -21,11 +21,11 @@
     "styled-system": "^5.1.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
+    "@babel/core": "^7.0.0-0",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "@matthamlin/property-controls": "^1.0.0",
-    "parcel-bundler": "^1.12.4",
-    "gh-pages": "^2.1.1"
+    "gh-pages": "^2.1.1",
+    "parcel-bundler": "^1.12.4"
   }
 }
