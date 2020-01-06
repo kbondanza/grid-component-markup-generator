@@ -8,8 +8,8 @@
     "clean": "rm dist/bundle.js",
     "start": "parcel index.html",
     "build-prod": "parcel build index.html",
-    "predeploy": "yarn build-prod",
-    "deploy": "gh-pages -d build-prod"
+    "predeploy": "rm -rf dist && parcel build index.html",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@styled-system/should-forward-prop": "^5.1.4",
