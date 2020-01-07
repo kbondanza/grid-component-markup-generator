@@ -11,9 +11,16 @@ const StyledLink = styled(Box)`
   }
 `;
 
-export default function Link({ children, onClick, type }) {
+export default function Link({ children, href, type }) {
   return (
-    <StyledLink as="a" type={type} onClick={onClick}>
+    <StyledLink
+      as="a"
+      type={type}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      color="#00b8c9"
+    >
       {children}
     </StyledLink>
   );

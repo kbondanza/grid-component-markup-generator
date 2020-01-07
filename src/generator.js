@@ -332,7 +332,7 @@ export default function Generator({ theme }) {
         right="6"
         color={theme.colors.secondaryBright}
       >
-        <Link>
+        <Link href="https://github.com/kbondanza/grid-component-markup-generator">
           <GithubIcon title="Github" />
         </Link>
       </Box>
